@@ -1,0 +1,35 @@
+{
+    "posts" : [
+        {
+            "date" : "7 June",
+            "user" : {
+                "name" : "Priya Suresh",
+                "image" : "img_2.jpg"
+            },
+            "topic" : {
+                "thumbnail" : "topic.jpg",
+                "title" : "Covishield shows better antibody response than Covaxin: Study"
+            },
+            "poll" : {
+                "question" : "Have you been able to take the vaccine yet? The length of this 120 character and its fits",
+                "timeLeft" : "3 Hours Left",
+                "options" : [
+                    "Yes, Covishield",
+                    "Yes, Covaxin",
+                    "Not Yet",
+                    "No, Don't want to take!"
+                ]
+            },
+            "comments" : [
+                
+                {
+                    "author" : {
+                        "name": "Mitch Koko",
+                        "image": "img_1.jpg"
+                    },
+                    "message" : "Woah !! Why didn't I think of this.."
+                }
+            ]
+        }
+    ]
+}
