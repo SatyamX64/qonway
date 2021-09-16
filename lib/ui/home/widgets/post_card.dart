@@ -45,7 +45,7 @@ class PostCard extends StatelessWidget {
                     child: Image.asset('assets/icons/chat.png'),
                   ),
                   Text(
-                    '13 Comments',
+                    '${post.comments.length} Comments',
                     style: TextStyle(
                       fontSize: 12 * px * 1.44,
                       color: Color(0xFF999999),
@@ -78,10 +78,10 @@ class PostCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _optionButton(px, "Yes, Covishield"),
-          _optionButton(px, "Yes, Covaxin"),
-          _optionButton(px, "Not Yet"),
-          _optionButton(px, "No, Don't want to take!"),
+          _optionButton(px, post.poll.options[0]),
+          _optionButton(px, post.poll.options[1]),
+          _optionButton(px, post.poll.options[2]),
+          _optionButton(px, post.poll.options[3]),
         ],
       ),
     );
@@ -95,11 +95,13 @@ class PostCard extends StatelessWidget {
         children: [
           Text(
             '14 Votes',
-            style: TextStyle(fontSize: 12 * px * 1.44, color: Color(0xFF999999)),
+            style:
+                TextStyle(fontSize: 12 * px * 1.44, color: Color(0xFF999999)),
           ),
           Text(
-            '• 3 Hours Left',
-            style: TextStyle(fontSize: 12 * px * 1.44, color: Color(0xFF999999)),
+            ' • ${post.poll.timeLeft}',
+            style:
+                TextStyle(fontSize: 12 * px * 1.44, color: Color(0xFF999999)),
           )
         ],
       ),
@@ -111,7 +113,7 @@ class PostCard extends StatelessWidget {
       height: 90 * px,
       alignment: Alignment.center,
       child: Text(
-        'Have you been able to take the vaccine yet? The length of this 120 characters and it fits.',
+        post.poll.question,
         style: TextStyle(color: Colors.black, fontSize: 14 * px * 1.44),
       ),
     );
@@ -126,7 +128,7 @@ class PostCard extends StatelessWidget {
           Container(
             constraints: BoxConstraints.expand(),
             child: Image.asset(
-              'assets/images/topic.jpg',
+              'assets/images/${post.topic.thumbnail}',
               fit: BoxFit.fill,
             ),
           ),
@@ -141,7 +143,7 @@ class PostCard extends StatelessWidget {
                   alignment: Alignment.center,
                   width: double.maxFinite,
                   child: Text(
-                    'Covishield shows better antibody respone than Covaxin: Study',
+                    post.topic.title,
                     style: TextStyle(
                       color: Color(0xFFFFFFFF),
                       fontSize: 14 * px * 1.44,
@@ -181,7 +183,8 @@ class PostCard extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 10 * px),
             child: CircleAvatar(
               backgroundColor: Colors.green,
-              backgroundImage: ExactAssetImage('assets/images/img_1.jpg'),
+              backgroundImage:
+                  ExactAssetImage('assets/images/${post.user.image}'),
             ),
           ),
           SizedBox(
@@ -192,14 +195,14 @@ class PostCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Priya Suresh',
+                post.user.name,
                 style: TextStyle(
                   color: Color(0xFF2C363F),
                   fontSize: 16.0 * px * 1.44,
                 ),
               ),
               Text(
-                '7 June',
+                post.date,
                 style: TextStyle(
                   color: Color(0xFF2C363F),
                   fontSize: 12 * px * 1.44,

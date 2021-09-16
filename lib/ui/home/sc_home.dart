@@ -23,9 +23,9 @@ class HomeScreen extends StatelessWidget {
                 width: size.width,
                 viewport: orientation == Orientation.portrait ? 1 : 0.33,
                 enlargeCenterPage: true,
-                children: [1, 2, 3, 4, 5]
+                children: posts
                     .map(
-                      (item) => PostCard(post: posts[0]),
+                      (item) => PostCard(post: item),
                     )
                     .toList(),
               ),
