@@ -34,55 +34,57 @@ class PostCard extends StatelessWidget {
             _question(px),
             _votes(px),
             _options(px),
-            Container(
-              color: Colors.white,
-              height: 63 * px,
-              alignment: Alignment.center,
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Image.asset('assets/icons/chat.png'),
-                  ),
-                  Text(
-                    '${post.comments.length} Comments',
-                    style: TextStyle(
-                      fontSize: 12 * px * 1.44,
-                      color: Color(0xFF999999),
-                    ),
-                  ),
-                  Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Image.asset('assets/icons/whatsapp.png'),
-                  ),
-                  Text(
-                    'Share on WhatsApp',
-                    style: TextStyle(
-                      fontSize: 12 * px * 1.44,
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            _comments(px),
           ],
         ),
       );
     });
   }
 
+  Container _comments(double px) {
+    return Container(
+      color: Colors.white,
+      height: 63 * px,
+      alignment: Alignment.center,
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Image.asset('assets/icons/chat.png'),
+          ),
+          Text(
+            '${post.comments.length} Comments',
+            style: TextStyle(
+              fontSize: 12 * px * 1.44,
+              color: Color(0xFF999999),
+            ),
+          ),
+          Spacer(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Image.asset('assets/icons/whatsapp.png'),
+          ),
+          Text(
+            'Share on WhatsApp',
+            style: TextStyle(
+              fontSize: 12 * px * 1.44,
+              color: Colors.black,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Container _options(double px) {
     return Container(
       height: 225 * px,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          _optionButton(px, post.poll.options[0]),
-          _optionButton(px, post.poll.options[1]),
-          _optionButton(px, post.poll.options[2]),
-          _optionButton(px, post.poll.options[3]),
-        ],
+      child: _Options(
+        onSelecteOption: (option) {
+          print("User Selected Option $option");
+        },
+        px: px,
+        options: post.poll.options.toList(),
       ),
     );
   }
@@ -111,7 +113,7 @@ class PostCard extends StatelessWidget {
   Container _question(double px) {
     return Container(
       height: 90 * px,
-      alignment: Alignment.center,
+      alignment: Alignment.centerLeft,
       child: Text(
         post.poll.question,
         style: TextStyle(color: Colors.black, fontSize: 14 * px * 1.44),
@@ -121,7 +123,6 @@ class PostCard extends StatelessWidget {
 
   Container _topic(double px) {
     return Container(
-      color: Colors.yellow,
       height: 405 * px,
       child: Stack(
         children: [
@@ -158,21 +159,6 @@ class PostCard extends StatelessWidget {
     );
   }
 
-  Widget _optionButton(double px, String text) {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        height: 45 * px,
-        width: double.maxFinite,
-        alignment: Alignment.centerLeft,
-        decoration: BoxDecoration(
-            color: Color(0xFFEDF0F3), borderRadius: BorderRadius.circular(4)),
-        padding: EdgeInsets.only(left: 12),
-        child: Text(text, style: TextStyle(fontSize: 16 * px * 1.44)),
-      ),
-    );
-  }
-
   Container _userInfo(double px) {
     return Container(
       height: 90 * px,
@@ -182,7 +168,6 @@ class PostCard extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(vertical: 10 * px),
             child: CircleAvatar(
-              backgroundColor: Colors.green,
               backgroundImage:
                   ExactAssetImage('assets/images/${post.user.image}'),
             ),
@@ -215,6 +200,64 @@ class PostCard extends StatelessWidget {
             Icons.more_vert,
             color: Colors.black,
           )
+        ],
+      ),
+    );
+  }
+}
+
+class _Options extends StatefulWidget {
+  const _Options({
+    Key? key,
+    required this.onSelecteOption,
+    required this.px,
+    required this.options,
+  }) : super(key: key);
+  final void Function(int) onSelecteOption;
+  final double px;
+  final List<String> options;
+  @override
+  __OptionsState createState() => __OptionsState();
+}
+
+class __OptionsState extends State<_Options> {
+  Widget _optionButton(int index) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedIndex = index;
+          widget.onSelecteOption(index);
+        });
+      },
+      child: Container(
+        height: 45 * widget.px,
+        width: double.maxFinite,
+        alignment: Alignment.centerLeft,
+        decoration: BoxDecoration(
+            color: Color(0xFFEDF0F3), borderRadius: BorderRadius.circular(4)),
+        padding: EdgeInsets.only(left: 12),
+        child: Text(widget.options[index],
+            style: TextStyle(
+                fontSize: 16 * widget.px * 1.44,
+                fontWeight: selectedIndex == index
+                    ? FontWeight.bold
+                    : FontWeight.w400)),
+      ),
+    );
+  }
+
+  var selectedIndex = -1;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 225 * widget.px,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          _optionButton(0),
+          _optionButton(1),
+          _optionButton(2),
+          _optionButton(3),
         ],
       ),
     );
