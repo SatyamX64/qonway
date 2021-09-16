@@ -23,7 +23,7 @@ class CardCarousel extends StatelessWidget {
       options: CarouselOptions(
           aspectRatio: width / height,
           viewportFraction: viewport,
-          enlargeCenterPage: true),
+          enlargeCenterPage: enlargeCenterPage),
       items: children
           .map(
             (item) => Align(

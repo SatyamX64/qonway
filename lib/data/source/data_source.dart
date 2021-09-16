@@ -13,7 +13,7 @@ class DataSource {
           ),
         )
         .toList();
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 1));
     return postList;
   }
   
